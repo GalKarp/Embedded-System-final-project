@@ -1,0 +1,24 @@
+#include <LiquidCrystal.h>
+int tempPin = 0;
+int motorPin = 2;
+int potVal;  // variable to read the value from the analog pin 
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
+void setup() 
+{
+  Serial.begin(9600); 
+ pinMode(motorPin, OUTPUT);
+ lcd.begin(16, 2);
+ lcd.print("Temp C ");
+}
+void loop()
+{
+ // Display Temperature in C
+ int tempReading = analogRead(tempPin);
+ float tempVolts = tempReading * 5.0 / 1024.0;
+ float tempC = (tempVolts - 0.5) * 100.0;
+ Serial.println(tempC);
+ // ----------------
+ lcd.setCursor(7, 0);
+ lcd.print(tempC);
+ delay(1000);    
+}
